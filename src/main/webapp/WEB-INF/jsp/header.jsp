@@ -14,7 +14,9 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
     <style>
-        .error {color:red}
+        .error {
+            color: red
+        }
     </style>
 </head>
 <body>
@@ -29,6 +31,22 @@
             <ul class="nav navbar-nav">
                 <li class="active"><a href="/adminTools"> Administration tools </a></li>
             </ul>
+        </c:if>
+
+        <c:if test="${pageContext.request.isUserInRole('USER')}">
+            <form method="get" action="/user/search">
+
+                <ul class="nav navbar-nav">
+
+                    <li class="active">
+                        <a><input type="text" name="query" placeholder="Enter film name" class="form-control"></a>
+                    </li>
+                    <li>
+                        <a><input type="submit" value="Find" class="btn btn-primary"></a>
+                    </li>
+
+                </ul>
+            </form>
         </c:if>
 
         <div style=" position:absolute; right: 0px;">

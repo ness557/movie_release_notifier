@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class SecurityController {
@@ -34,15 +36,23 @@ public class SecurityController {
     public String register(@Valid @ModelAttribute User user,
                            BindingResult bindingResult, Model model) {
 
-        if(user.getEmail().isEmpty() && user.getTelegramId().isEmpty()) {
-            model.addAttribute("error", "Please enter email or telegram id");
+        List<String> errors = new ArrayList<>();
+
+        if(user.getEmail().isEmpty() && user.getTelegramId().isEmpty())
+            errors.add("Please enter email or telegram id");
+
+        if(service.isExists(user.getLogin()))
+            errors.add("User with such login already exists");
+
+        if(!errors.isEmpty()){
+            model.addAttribute("errors", errors);
             return "register";
         }
 
         if(bindingResult.hasErrors())
             return "register";
 
-        user.setRole("USER");
+        user.setRole("ROLE_USER");
         service.save(user);
 
         return "home";

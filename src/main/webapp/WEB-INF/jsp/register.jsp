@@ -5,8 +5,10 @@
     Register page
 </h3>
 
-<c:if test="${not empty error}">
-    <h4 class="error">${error}</h4>
+<c:if test="${not empty errors}">
+    <c:forEach items="${errors}" var="error">
+        <h4 class="error">${error}</h4>
+    </c:forEach>
 </c:if>
 
 <spring:hasBindErrors name="emptyEmailAndId">pidr</spring:hasBindErrors>
