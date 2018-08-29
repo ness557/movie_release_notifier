@@ -1,8 +1,15 @@
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <jsp:directive.include file="header.jsp"/>
 
 <h3>
     Register page
 </h3>
+
+<c:if test="${not empty error}">
+    <h4 class="error">${error}</h4>
+</c:if>
+
+<spring:hasBindErrors name="emptyEmailAndId">pidr</spring:hasBindErrors>
 
 <%--@elvariable id="user" type="com.ness.movie_release_notifier.model.User"--%>
 <form:form action='/register' method='post' modelAttribute="user">
@@ -10,6 +17,7 @@
     <form:hidden path="id"/>
 
     <table class="table">
+
         <tr>
             <td><form:label path="login"> Login </form:label></td>
             <td><form:input path="login" cssClass="form-control"/></td>

@@ -4,6 +4,7 @@ import com.ness.movie_release_notifier.model.User;
 import com.ness.movie_release_notifier.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -31,7 +32,12 @@ public class SecurityController {
 
     @PostMapping("/register")
     public String register(@Valid @ModelAttribute User user,
-                           BindingResult bindingResult) {
+                           BindingResult bindingResult, Model model) {
+
+        if(user.getEmail().isEmpty() && user.getTelegramId().isEmpty()) {
+            model.addAttribute("error", "Please enter email or telegram id");
+            return "register";
+        }
 
         if(bindingResult.hasErrors())
             return "register";
