@@ -4,7 +4,10 @@
     Register page
 </h3>
 
+<%--@elvariable id="user" type="com.ness.movie_release_notifier.model.User"--%>
 <form:form action='/register' method='post' modelAttribute="user">
+
+    <form:hidden path="id"/>
 
     <table class="table">
         <tr>

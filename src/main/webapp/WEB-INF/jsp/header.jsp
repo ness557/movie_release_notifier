@@ -10,7 +10,6 @@
     <title>Movie Notifier Service</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"/>
-    <link href="/css/sticky-footer-navbar.css" rel="stylesheet"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
@@ -44,6 +43,7 @@
                 <c:otherwise>
                     <ul class="nav navbar-nav">
                         <li class="active"><a href="/login"> Sign in </a></li>
+                        <li class="active"><a href="/register"> Register </a></li>
                     </ul>
                 </c:otherwise>
             </c:choose>

@@ -21,7 +21,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     @Qualifier("myUserDetailService")
     private UserDetailsService userDetailsService;
-    
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
