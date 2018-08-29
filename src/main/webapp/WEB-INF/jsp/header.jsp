@@ -17,6 +17,22 @@
         .error {
             color: red
         }
+
+        .table td.fit,
+        .table th.fit {
+            white-space: nowrap;
+            width: 1%;
+        }
+
+        .pagesTable {
+            table-layout: auto;
+            width: 200px;
+        }
+
+        .center {
+            margin: auto;
+            padding: 5px;
+        }
     </style>
 </head>
 <body>
@@ -39,12 +55,20 @@
                 <ul class="nav navbar-nav">
 
                     <li class="active">
-                        <a><input type="text" name="query" placeholder="Enter film name" class="form-control"></a>
+                        <a><input type="text" name="query" placeholder="Enter Film Name" class="form-control"></a>
                     </li>
+                </ul>
+
+                <ul class="nav navbar-nav">
+                    <li class="active">
+                        <a><input type="number" step="1" min="1980" max="3000" name="year" placeholder="Enter Year"
+                                  class="form-control"></a>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav">
                     <li>
                         <a><input type="submit" value="Find" class="btn btn-primary"></a>
                     </li>
-
                 </ul>
             </form>
         </c:if>

@@ -21,8 +21,8 @@ public class SearchController {
                          Model model){
 
         OmdbSearchResultWrapper result;
-        if(year != null && page != null)
-            result = filmOmdbService.search(query, year, page);
+        if(year != null)
+            result = filmOmdbService.search(query, year, 1);
 
         else if(page != null)
             result = filmOmdbService.search(query, page);
