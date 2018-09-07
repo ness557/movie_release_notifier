@@ -1,5 +1,6 @@
 package com.ness.movie_release_notifier.service;
 
+import com.ness.movie_release_notifier.model.OmdbFullWrapper;
 import com.ness.movie_release_notifier.model.OmdbSearchResultWrapper;
 import com.ness.movie_release_notifier.model.OmdbWrapper;
 import org.apache.commons.lang3.text.StrSubstitutor;
@@ -97,7 +98,7 @@ public class FilmOmdbServiceImpl implements FilmOmdbService {
     }
 
     @Override
-    public OmdbWrapper getInfo(String imdbId) {
+    public OmdbFullWrapper getInfo(String imdbId) {
         Map values = new HashMap();
         values.put("apikey", apikey);
         values.put("url", apiUrl);
@@ -107,11 +108,11 @@ public class FilmOmdbServiceImpl implements FilmOmdbService {
         StrSubstitutor sub = new StrSubstitutor(values);
         String request = sub.replace(templateRequest);
 
-        ResponseEntity<OmdbWrapper> response = restTemplate.exchange(
+        ResponseEntity<OmdbFullWrapper> response = restTemplate.exchange(
                 request,
                 HttpMethod.GET,
                 null,
-                new ParameterizedTypeReference<OmdbWrapper>(){});
+                new ParameterizedTypeReference<OmdbFullWrapper>(){});
 
         return response.getBody();
     }

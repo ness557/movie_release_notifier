@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,9 +28,10 @@ public class SecurityController {
     }
 
     @GetMapping("/register")
-    public ModelAndView registerForm() {
-        return new ModelAndView("register")
-                .addObject(new User());
+    public String registerForm(Model model) {
+
+        model.addAttribute(new User());
+        return "register";
     }
 
     @PostMapping("/register")
@@ -41,8 +43,10 @@ public class SecurityController {
         if(user.getEmail().isEmpty() && user.getTelegramId().isEmpty())
             errors.add("Please enter email or telegram id");
 
-        if(service.isExists(user.getLogin()))
-            errors.add("User with such login already exists");
+        if (user.getId() == null)
+            if(service.isExists(user.getLogin()))
+                errors.add("User with such login already exists");
+
 
         if(!errors.isEmpty()){
             model.addAttribute("errors", errors);
@@ -56,5 +60,12 @@ public class SecurityController {
         service.save(user);
 
         return "home";
+    }
+
+    @GetMapping("/userInfo")
+    public String userInfo(Model model, Principal principal){
+
+        model.addAttribute(service.findByLogin(principal.getName()));
+        return "register";
     }
 }

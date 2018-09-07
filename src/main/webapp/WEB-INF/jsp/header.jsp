@@ -33,6 +33,19 @@
             margin: auto;
             padding: 5px;
         }
+
+        .mytext {
+            word-break:break-word;
+        }
+        .row {
+            margin: 5px;
+        }
+
+        .panel-default{
+            text-align: center;
+        }
+
+
     </style>
 </head>
 <body>
@@ -40,7 +53,7 @@
     <div class="container-fluid" style="display: inline-flex">
 
         <ul class="nav navbar-nav">
-            <li class="active"><a href="/index"> Movie Notifier Service </a></li>
+            <li class="active"><a href="/home"> Movie Notifier Service </a></li>
         </ul>
 
         <c:if test="${pageContext.request.isUserInRole('ADMIN')}">

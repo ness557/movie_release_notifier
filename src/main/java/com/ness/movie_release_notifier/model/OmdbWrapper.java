@@ -1,9 +1,8 @@
 package com.ness.movie_release_notifier.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.ness.movie_release_notifier.util.OmdbLocalDateDeserializer;
 import lombok.*;
 
 import java.io.Serializable;
@@ -29,7 +28,6 @@ public class OmdbWrapper implements Serializable {
     private String posterUrl;
 
     @JsonProperty(value = "DVD")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd MMM yyyy", locale = "en_US")
-    @JsonDeserialize(using = LocalDateDeserializer.class)
+    @JsonDeserialize(using = OmdbLocalDateDeserializer.class)
     private LocalDate dvdDate;
 }
