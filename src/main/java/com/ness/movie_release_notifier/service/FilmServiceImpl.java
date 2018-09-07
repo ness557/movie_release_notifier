@@ -3,12 +3,17 @@ package com.ness.movie_release_notifier.service;
 import com.ness.movie_release_notifier.model.Film;
 import com.ness.movie_release_notifier.repository.FilmRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
 public class FilmServiceImpl implements FilmService{
+
+    @Autowired
+    FilmOmdbService omdbService;
 
     @Autowired
     private FilmRepository repository;
@@ -51,5 +56,18 @@ public class FilmServiceImpl implements FilmService{
     @Override
     public boolean isExistsByImdbIdAndUserId(String imdbId, Long userId) {
         return repository.existsByImdbIdAndUserId(imdbId, userId);
+    }
+
+    @Scheduled(cron = "${cron.pattern.updateDB}")
+    public void updateDB(){
+
+        repository.getUniqueImdbIds().forEach(id -> {
+
+            LocalDate dvdDate = omdbService.getInfo(id).getDvd();
+            List<Film> allByImdbId = repository.findAllByImdbId(id);
+
+            allByImdbId.forEach(e -> e.setDvdDate(dvdDate));
+            repository.saveAll(allByImdbId);
+        });
     }
 }

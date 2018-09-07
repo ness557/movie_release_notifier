@@ -23,6 +23,12 @@ public class Film {
     @Column(name = "title")
     private String title;
 
+    @Column(name = "poster_url")
+    private String posterUrl;
+
+    @Column(name = "type")
+    private String type;
+
     @Column(name = "release_date")
     private LocalDate releaseDate;
 

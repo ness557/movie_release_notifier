@@ -62,6 +62,8 @@ public class FilmController {
         Film film = new Film(null,
                 wrapper.getImdbId(),
                 wrapper.getTitle(),
+                wrapper.getPoster(),
+                wrapper.getType(),
                 wrapper.getReleased(),
                 wrapper.getDvd(),
                 user);

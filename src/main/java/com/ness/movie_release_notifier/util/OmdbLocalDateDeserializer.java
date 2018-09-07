@@ -33,7 +33,7 @@ public class OmdbLocalDateDeserializer extends StdDeserializer<LocalDate> {
         try {
             return LocalDate.parse(value,formatter);
         } catch (Exception e) {
-            return LocalDate.MIN;
+            return LocalDate.of(1970, 1, 1);
         }
     }
 }

@@ -15,6 +15,8 @@ CREATE TABLE film
   id bigint NOT NULL,
   dvd_date date,
   imdb_id character varying(255),
+  type character varying(255),
+  poster_url character varying(255),
   release_date date,
   title character varying(255),
   uzer_id bigint,

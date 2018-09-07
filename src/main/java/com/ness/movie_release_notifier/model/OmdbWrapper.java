@@ -21,7 +21,7 @@ public class OmdbWrapper implements Serializable {
     @JsonProperty(value = "imdbID")
     private String imdbId;
 
-    @JsonProperty(value = "Type")
+    @JsonProperty(value = "type")
     private String type;
 
     @JsonProperty(value = "Poster")
@@ -30,4 +30,14 @@ public class OmdbWrapper implements Serializable {
     @JsonProperty(value = "DVD")
     @JsonDeserialize(using = OmdbLocalDateDeserializer.class)
     private LocalDate dvdDate;
+
+    public static OmdbWrapper wrap(Film film){
+        OmdbWrapper wrapper = new OmdbWrapper();
+        wrapper.setTitle(film.getTitle());
+        wrapper.setYear(String.valueOf(film.getReleaseDate().getYear()));
+        wrapper.setImdbId(film.getImdbId());
+        wrapper.setPosterUrl(film.getPosterUrl());
+        wrapper.setType(film.getType());
+        return wrapper;
+    }
 }
