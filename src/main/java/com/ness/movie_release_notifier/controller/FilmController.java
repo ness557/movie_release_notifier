@@ -7,12 +7,11 @@ import com.ness.movie_release_notifier.service.FilmOmdbService;
 import com.ness.movie_release_notifier.service.FilmService;
 import com.ness.movie_release_notifier.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.security.Principal;
 
@@ -31,8 +30,14 @@ public class FilmController {
 
     @GetMapping("/getFilm")
     public String getFilm(@RequestParam("imdbId") String imdbId,
-                        Model model){
+                          Principal principal,
+                          Model model){
 
+        User user = userService.findByLogin(principal.getName());
+
+        if (filmService.isExistsByImdbIdAndUserId(imdbId, user.getId())) {
+            model.addAttribute("subscribed", true);
+        }
         model.addAttribute("film", filmOmdbService.getInfo(imdbId));
         return "user/filmInfo";
     }
@@ -45,7 +50,14 @@ public class FilmController {
         String login = principal.getName();
 
         User user = userService.findByLogin(login);
+
+        if(filmService.isExistsByImdbIdAndUserId(imdbId, user.getId()))
+            throw new ResponseStatusException(HttpStatus.CONFLICT);
+
         OmdbFullWrapper wrapper = filmOmdbService.getInfo(imdbId);
+
+        if (wrapper == null)
+            throw new ResponseStatusException(HttpStatus.CONFLICT);
 
         Film film = new Film(null,
                 wrapper.getImdbId(),
@@ -56,10 +68,19 @@ public class FilmController {
 
         filmService.save(film);
 
-        model.addAttribute("user", login);
-        model.addAttribute("film",
-                wrapper.getTitle() + " (" + wrapper.getYear() + " )");
+        return "redirect:getFilm?imdbId=" + imdbId;
+    }
 
-        return "user/subsConfirm";
+    @PostMapping("/unSubscribe")
+    public String unSubscribe(@RequestParam(value = "imdbId") String imdbId,
+                            Principal principal){
+
+        String login = principal.getName();
+
+        User user = userService.findByLogin(login);
+
+        filmService.getByImdbIdAndUserId(imdbId, user.getId()).forEach(filmService::delete);
+
+        return "redirect:getFilm?imdbId=" + imdbId;
     }
 }

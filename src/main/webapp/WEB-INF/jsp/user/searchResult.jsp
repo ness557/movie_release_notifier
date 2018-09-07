@@ -12,7 +12,7 @@
         <table class="table">
             <tr>
                 <td colspan="3" rowspan="5">
-                    <img src="${film.posterUrl}" width="200" onerror="">
+                    <img src="${film.posterUrl}" width="200">
                 </td>
             </tr>
             <tr>

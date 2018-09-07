@@ -2,8 +2,9 @@ package com.ness.movie_release_notifier.service;
 
 import com.ness.movie_release_notifier.model.OmdbFullWrapper;
 import com.ness.movie_release_notifier.model.OmdbSearchResultWrapper;
-import com.ness.movie_release_notifier.model.OmdbWrapper;
 import org.apache.commons.lang3.text.StrSubstitutor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
@@ -12,7 +13,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Service
@@ -25,6 +25,8 @@ public class FilmOmdbServiceImpl implements FilmOmdbService {
 
     @Value("${omdbapi.apikey}")
     private String apikey;
+
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Override
     public OmdbSearchResultWrapper search(String title) {
@@ -114,6 +116,11 @@ public class FilmOmdbServiceImpl implements FilmOmdbService {
                 null,
                 new ParameterizedTypeReference<OmdbFullWrapper>(){});
 
-        return response.getBody();
+
+        OmdbFullWrapper fullWrapper = response.getBody();
+
+        logger.debug(this.getClass() + " got fullFilmInfo: " + fullWrapper);
+
+        return fullWrapper;
     }
 }

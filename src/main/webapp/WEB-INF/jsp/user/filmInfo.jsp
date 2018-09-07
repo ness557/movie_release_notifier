@@ -6,6 +6,22 @@
     <div class="row">
         <div class="col-md-2">
             <img src="${film.poster}" width="200">
+            <p/>
+
+            <c:choose>
+                <c:when test="${subscribed}">
+                    <form action="/user/unSubscribe" method="post">
+                        <input type="hidden" name="imdbId" value="${film.imdbId}"/>
+                        <input type="submit" value="Unsubscribe" class="btn btn-success"/>
+                    </form>
+                </c:when>
+                <c:otherwise>
+                    <form action="/user/subscribe" method="post">
+                        <input type="hidden" name="imdbId" value="${film.imdbId}"/>
+                        <input type="submit" value="Subscribe" class="btn btn-primary"/>
+                    </form>
+                </c:otherwise>
+            </c:choose>
         </div>
         <div class="col-md-8">
             <div class="row">

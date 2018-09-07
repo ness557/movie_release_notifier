@@ -5,6 +5,8 @@ import com.ness.movie_release_notifier.repository.FilmRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class FilmServiceImpl implements FilmService{
 
@@ -37,7 +39,17 @@ public class FilmServiceImpl implements FilmService{
     }
 
     @Override
-    public Iterable<Film> getAll() {
+    public List<Film> getAll() {
         return repository.findAll();
+    }
+
+    @Override
+    public List<Film> getByImdbIdAndUserId(String imdbId, Long userId) {
+        return repository.findAllByImdbIdAndUserId(imdbId, userId);
+    }
+
+    @Override
+    public boolean isExistsByImdbIdAndUserId(String imdbId, Long userId) {
+        return repository.existsByImdbIdAndUserId(imdbId, userId);
     }
 }

@@ -2,6 +2,8 @@ package com.ness.movie_release_notifier.service;
 
 import com.ness.movie_release_notifier.model.Film;
 
+import java.util.List;
+
 public interface FilmService {
     
     void save(Film film);
@@ -9,5 +11,8 @@ public interface FilmService {
     Film get(Long id);
     void delete(Film film);
     void delete(Long id);
-    Iterable<Film> getAll();
+    List<Film> getAll();
+    List<Film> getByImdbIdAndUserId(String imdbId, Long userId);
+    boolean isExistsByImdbIdAndUserId(String imdbId, Long userId);
+
 }
