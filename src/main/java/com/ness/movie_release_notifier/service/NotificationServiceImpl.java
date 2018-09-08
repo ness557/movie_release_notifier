@@ -7,9 +7,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class NotificationServiceImpl implements NotificationService{
@@ -39,10 +37,12 @@ public class NotificationServiceImpl implements NotificationService{
 
         Map<String, OmdbWrapper> telegramNotifies = new HashMap<>();
         Map<String, OmdbWrapper> emailNotifies = new HashMap<>();
+        List<Film> toDelete = new LinkedList<>();
 
         films.forEach(f -> {
             if (f.getDvdDate().isBefore(endDate) && f.getDvdDate().isAfter(startDate)) {
 
+                toDelete.add(f);
                 if (f.getUser().isTelegramNotify()) {
                     telegramNotifies.put(f.getUser().getTelegramId(), OmdbWrapper.wrap(f));
                 } else {
@@ -53,6 +53,6 @@ public class NotificationServiceImpl implements NotificationService{
         notifyByEmail(emailNotifies);
         notifyByTelegram(telegramNotifies);
 
-        //TODO make db clean
+        filmService.delete(toDelete);
     }
 }

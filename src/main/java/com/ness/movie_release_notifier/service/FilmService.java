@@ -11,6 +11,7 @@ public interface FilmService {
     Film get(Long id);
     void delete(Film film);
     void delete(Long id);
+    void delete(List<Film> films);
     List<Film> getAll();
     List<Film> getByImdbIdAndUserId(String imdbId, Long userId);
     boolean isExistsByImdbIdAndUserId(String imdbId, Long userId);

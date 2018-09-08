@@ -44,6 +44,11 @@ public class FilmServiceImpl implements FilmService{
     }
 
     @Override
+    public void delete(List<Film> films) {
+        repository.deleteAll(films);
+    }
+
+    @Override
     public List<Film> getAll() {
         return repository.findAll();
     }
