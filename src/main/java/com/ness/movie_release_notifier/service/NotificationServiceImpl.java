@@ -54,8 +54,7 @@ public class NotificationServiceImpl implements NotificationService{
     }
 
     private void addNotify(Film f, Map<String, List<OmdbWrapper>> notifies, String userAddress){
-        if (!notifies.containsKey(userAddress))
-            notifies.put(userAddress, new ArrayList<>());
+        notifies.computeIfAbsent(userAddress, k -> new ArrayList<>());
         notifies.get(userAddress).add(OmdbWrapper.wrap(f));
     }
 }

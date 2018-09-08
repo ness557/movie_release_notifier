@@ -15,10 +15,6 @@ public class MovieReleaseNotifierApplication {
 
     public static void main(String[] args) {
         ConfigurableApplicationContext run = SpringApplication.run(MovieReleaseNotifierApplication.class, args);
-
-        FilmRepository repository = run.getBean(FilmRepository.class);
-
-        repository.findAllByImdbId("tt4154756").forEach(Object::toString);
     }
 
     @Bean
