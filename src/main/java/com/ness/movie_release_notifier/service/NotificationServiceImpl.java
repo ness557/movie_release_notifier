@@ -15,14 +15,11 @@ public class NotificationServiceImpl implements NotificationService{
     @Autowired
     private FilmService filmService;
 
-    @Autowired
-    private UserService userService;
-
-    private void notifyByEmail(Map<String, OmdbWrapper> notifies){
+    private void notifyByEmail(Map<String, List<OmdbWrapper>> notifies){
 
     }
 
-    private void notifyByTelegram(Map<String, OmdbWrapper> notifies){
+    private void notifyByTelegram(Map<String, List<OmdbWrapper>> notifies){
 
     }
 
@@ -35,8 +32,8 @@ public class NotificationServiceImpl implements NotificationService{
         LocalDate endDate = LocalDate.now().minusWeeks(1);
         LocalDate startDate = endDate.minusWeeks(1);
 
-        Map<String, OmdbWrapper> telegramNotifies = new HashMap<>();
-        Map<String, OmdbWrapper> emailNotifies = new HashMap<>();
+        Map<String, List<OmdbWrapper>> telegramNotifies = new HashMap<>();
+        Map<String, List<OmdbWrapper>> emailNotifies = new HashMap<>();
         List<Film> toDelete = new LinkedList<>();
 
         films.forEach(f -> {
@@ -44,9 +41,9 @@ public class NotificationServiceImpl implements NotificationService{
 
                 toDelete.add(f);
                 if (f.getUser().isTelegramNotify()) {
-                    telegramNotifies.put(f.getUser().getTelegramId(), OmdbWrapper.wrap(f));
+                    addNotify(f, telegramNotifies, f.getUser().getTelegramId());
                 } else {
-                    emailNotifies.put(f.getUser().getEmail(), OmdbWrapper.wrap(f));
+                    addNotify(f, emailNotifies, f.getUser().getEmail());
                 }
             }
         });
@@ -54,5 +51,11 @@ public class NotificationServiceImpl implements NotificationService{
         notifyByTelegram(telegramNotifies);
 
         filmService.delete(toDelete);
+    }
+
+    private void addNotify(Film f, Map<String, List<OmdbWrapper>> notifies, String userAddress){
+        if (!notifies.containsKey(userAddress))
+            notifies.put(userAddress, new ArrayList<>());
+        notifies.get(userAddress).add(OmdbWrapper.wrap(f));
     }
 }
