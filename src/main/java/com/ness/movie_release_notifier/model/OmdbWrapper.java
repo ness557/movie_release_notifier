@@ -38,6 +38,7 @@ public class OmdbWrapper implements Serializable {
         wrapper.setImdbId(film.getImdbId());
         wrapper.setPosterUrl(film.getPosterUrl());
         wrapper.setType(film.getType());
+        wrapper.setDvdDate(film.getDvdDate());
         return wrapper;
     }
 }

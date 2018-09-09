@@ -1,9 +1,6 @@
 package com.ness.movie_release_notifier.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -13,6 +10,7 @@ import javax.validation.constraints.Pattern;
 @Entity
 @Table(name = "uzer")
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor
+@ToString
 public class User {
 
     @Id

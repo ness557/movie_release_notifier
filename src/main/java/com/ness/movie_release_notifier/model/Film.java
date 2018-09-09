@@ -1,9 +1,6 @@
 package com.ness.movie_release_notifier.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -11,6 +8,7 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "film")
 @Getter @Setter @AllArgsConstructor @NoArgsConstructor
+@ToString
 public class Film {
 
     @Id

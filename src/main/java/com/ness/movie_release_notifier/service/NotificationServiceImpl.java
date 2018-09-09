@@ -12,8 +12,12 @@ import java.util.*;
 @Service
 public class NotificationServiceImpl implements NotificationService{
 
-    @Autowired
     private FilmService filmService;
+
+    @Autowired
+    public NotificationServiceImpl(FilmService filmService){
+        this.filmService = filmService;
+    }
 
     private void notifyByEmail(Map<String, List<OmdbWrapper>> notifies){
 
@@ -30,7 +34,7 @@ public class NotificationServiceImpl implements NotificationService{
         List<Film> films = filmService.getAll();
 
         LocalDate endDate = LocalDate.now().minusWeeks(1);
-        LocalDate startDate = endDate.minusWeeks(1);
+        LocalDate startDate = endDate.minusWeeks(1).minusDays(1);
 
         Map<String, List<OmdbWrapper>> telegramNotifies = new HashMap<>();
         Map<String, List<OmdbWrapper>> emailNotifies = new HashMap<>();
