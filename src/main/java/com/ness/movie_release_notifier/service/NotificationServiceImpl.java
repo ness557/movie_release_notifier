@@ -14,17 +14,23 @@ public class NotificationServiceImpl implements NotificationService{
 
     private FilmService filmService;
 
+    private TelegramService telegramService;
+
+    private EmailService emailService;
+
     @Autowired
-    public NotificationServiceImpl(FilmService filmService){
+    public NotificationServiceImpl(FilmService filmService, TelegramService telegramService, EmailService emailService){
         this.filmService = filmService;
+        this.telegramService = telegramService;
+        this.emailService = emailService;
     }
 
     private void notifyByEmail(Map<String, List<OmdbWrapper>> notifies){
-
+        notifies.forEach((key, value) -> value.forEach(l -> emailService.sendNotifyEmail(key, l)));
     }
 
     private void notifyByTelegram(Map<String, List<OmdbWrapper>> notifies){
-
+        notifies.forEach((key, value) -> value.forEach(l -> telegramService.notifyByTelegram(key, l)));
     }
 
     @Scheduled(cron = "${cron.pattern.notify}")

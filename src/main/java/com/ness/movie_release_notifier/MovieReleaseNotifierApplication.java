@@ -1,6 +1,5 @@
 package com.ness.movie_release_notifier;
 
-import com.ness.movie_release_notifier.repository.FilmRepository;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
